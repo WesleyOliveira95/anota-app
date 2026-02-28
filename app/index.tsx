@@ -14,21 +14,22 @@ export default function Index() {
           title: 'Notas'
         }}
       />
-    <Link href="/nota/new" asChild>
-      <Text style={{
-        alignSelf: 'flex-end',
-        paddingHorizontal: 14,
-        paddingVertical: 10,
-        borderRadius: 12,
-        backgroundColor: colors.accent,
-        color: colors.text,
-        fontWeight: '600',
-        overflow: 'hidden',
-        marginRight: 12,
-        marginTop: 12
-       }}>Adicionar Nota
-       </Text>
-    </Link>
+      <Link href={'../nota/new'} asChild>
+        <Text style={{
+          alignSelf: 'flex-end',
+          paddingHorizontal: 14,
+          paddingVertical: 10,
+          borderRadius: 12,
+          backgroundColor: colors.accent,
+          color: colors.text,
+          fontWeight: '600',
+          overflow: 'hidden',
+          marginRight: 12,
+          marginTop: 12
+        }}>
+          Adicionar Nota
+        </Text>
+      </Link>
     </View>
   ); 
 }

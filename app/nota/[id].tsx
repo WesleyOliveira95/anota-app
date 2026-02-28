@@ -1,9 +1,9 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
-const NotaeditorScreen = () => {
+const NotaEditorScreen = () => {
     const { id } = useLocalSearchParams();
-    const isNew = id === "new";
+    const isNew = id === 'new';
 
     return (
         <View style={{ flex: 1 }}>
@@ -11,9 +11,9 @@ const NotaeditorScreen = () => {
                 options={{ 
                     title: isNew ? "Nova Nota" : "Editar Nota" 
                 }} 
-        />
-    </View>
+            />
+        </View>
     );
 };
 
-export default NotaeditorScreen;
+export default NotaEditorScreen;
