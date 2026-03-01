@@ -14,7 +14,7 @@ export default function Index() {
           title: 'Notas'
         }}
       />
-      <Link href={'../nota/new'} asChild>
+      <Link href={'./nota/new'} asChild>
         <Text style={{
           alignSelf: 'flex-end',
           paddingHorizontal: 14,
