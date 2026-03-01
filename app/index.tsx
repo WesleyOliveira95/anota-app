@@ -1,8 +1,11 @@
+import { useNotas } from "@/hooks/useNotas";
 import { colors } from "@/lib/colors";
 import { Link, Stack } from "expo-router";
 import { Text, View } from "react-native";
 
 export default function Index() {
+  const {notas} =   useNotas();
+
   return (
     <View
       style={{
@@ -30,6 +33,17 @@ export default function Index() {
           Adicionar Nota
         </Text>
       </Link>
+
+      <View>
+        {
+          notas.map((nota, i) => (
+            <Text style={{color: colors.text}} key={i}>
+              {nota.title}
+            </Text>
+          ))
+        }
+      </View>  
+
     </View>
   ); 
 }
