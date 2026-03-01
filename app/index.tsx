@@ -2,7 +2,7 @@ import { NotaItem } from "@/components/NotaItem";
 import { useNotas } from "@/hooks/useNotas";
 import { colors } from "@/lib/colors";
 import { Link, Stack } from "expo-router";
-import { Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 
 export default function Index() {
   const {notas} =   useNotas();
@@ -35,16 +35,19 @@ export default function Index() {
         </Text>
       </Link>
 
-      <View>
-        {
-          notas.map((nota, i) => (
-            <NotaItem key={i} item={nota}/>
-          ))
-        }
-      </View>  
-
+    <FlatList
+      contentContainerStyle={{padding: 16, gap: 12}}
+      data={notas}
+      keyExtractor={item => item.id}
+      renderItem={({item, index}) => (
+       <NotaItem 
+          key={index}
+          item={item}  
+          onTogglePin={() => true}
+          onRemove={() => true} 
+        />
+      )}
+    />
     </View>
-  ); 
-}//<Text style={{color: colors.text}} key={i}>
-            //   {nota.title}
-            // </Text>
+  );
+};

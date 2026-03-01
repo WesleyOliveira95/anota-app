@@ -19,29 +19,56 @@ export const NotaItem = ({
     
 
     return (
+      <Pressable
+        style={({ pressed }) => ({
+          backgroundColor: colors.sub,
+          padding: 14,
+          borderRadius: 16,
+          borderWidth: 1,
+          borderColor: colors.border,
+          gap: 6,
+          opacity: pressed ? 0.9 : 1
+        })}  
+      >
+
         <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
         }}>
-        <Text style={{ color: colors.text, fontSize: 16, fontWeight: '700' }}>
-            {item.title}
+            <Text style={{ color: colors.text, fontSize: 16, fontWeight: '700' }}>
+                {item.title}
+            </Text>
+
+            <View style={{flexDirection: 'row', gap: 8}}>    
+                <Pressable onPress={() => onTogglePin(item.id)}>
+                    <Text style={{ color: colors.card}}>Pin</Text>
+                </Pressable>
+
+                <Pressable onPress={onEdit}>
+                    <Text style={{ color: colors.card}}>Editar</Text>
+                </Pressable>
+
+                <Pressable onPress={() => onRemove(item.id)}>
+                    <Text style={{ color: colors.card}}>Deletar</Text>
+                </Pressable>
+            </View>
+        </View>
+
+        <Text numberOfLines={4} style={{ color: colors.card, fontSize: 14 }}>
+            {item.body}
         </Text>
 
-        <View>    
-            <Pressable onPress={() => onTogglePin(item.id)}>
-                <Text style={{ color: colors.sub}}>Pin</Text>
-            </Pressable>
+        <Text  style={{ color: colors.card, fontSize: 12 }}>
+            Update {new Date(item.updatedAt).toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            })}
+        </Text>
 
-            <Pressable onPress={onEdit}>
-                <Text style={{ color: colors.sub}}>Editar</Text>
-            </Pressable>
-
-            <Pressable onPress={onRemove}>
-                <Text style={{ color: colors.sub}}>Deletar</Text>
-            </Pressable>
-        </View>
-
-        </View>
+      </Pressable>
     );
 };
