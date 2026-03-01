@@ -1,3 +1,4 @@
+import { NotaItem } from "@/components/NotaItem";
 import { useNotas } from "@/hooks/useNotas";
 import { colors } from "@/lib/colors";
 import { Link, Stack } from "expo-router";
@@ -37,13 +38,13 @@ export default function Index() {
       <View>
         {
           notas.map((nota, i) => (
-            <Text style={{color: colors.text}} key={i}>
-              {nota.title}
-            </Text>
+            <NotaItem key={i} item={nota}/>
           ))
         }
       </View>  
 
     </View>
   ); 
-}
+}//<Text style={{color: colors.text}} key={i}>
+            //   {nota.title}
+            // </Text>
