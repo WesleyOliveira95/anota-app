@@ -4,4 +4,5 @@ export type Nota = {
     body: string;
     pinned: boolean;
     updatedAt: number;
-};
+}
+//Tentando Hospedar...
