@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 import { Nota } from "@/types";
 
@@ -7,6 +8,8 @@ type NotasContextType = {
     addNota: (title: string, body: string) => Nota;
 };
 
+const STORAGE_KEY = "notas_app";
+
 const NotasContext = createContext<NotasContextType | null>(null);
 
 const uid = () => Math.random().toString(36).slice(2, 10);
@@ -14,20 +17,54 @@ const uid = () => Math.random().toString(36).slice(2, 10);
 export const NotasProvider = ({ children }: { children: ReactNode }) => {
     const [notas, setNotas] = useState<Nota[]>([]);
 
+    // carregar notas quando o app iniciar
+    useEffect(() => {
+        carregarNotas();
+    }, []);
+
+    const carregarNotas = async () => {
+        try {
+            const data = await AsyncStorage.getItem(STORAGE_KEY);
+
+            if (data !== null) {
+                setNotas(JSON.parse(data));
+            }
+        } catch (error) {
+            console.log("Erro ao carregar notas", error);
+        }
+    };
+
+    // salvar notas sempre que mudar
+    const salvarNotas = async (lista: Nota[]) => {
+        try {
+            await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(lista));
+        } catch (error) {
+            console.log("Erro ao salvar notas", error);
+        }
+    };
+
     const addNota = (title: string, body: string) => {
-        const t = title.trim()
-        const b = body.trim()
+
+        const t = title.trim();
+        const b = body.trim();
+
         const nota: Nota = {
             id: uid(),
             title: t,
             body: b,
             pinned: false,
             updatedAt: Date.now()
-        }
-        setNotas(prev => [nota, ...prev]);
+        };
+
+        const novaLista = [nota, ...notas];
+
+        setNotas(novaLista);
+
+        salvarNotas(novaLista);
+
         return nota;
     };
-    
+
     return (
         <NotasContext.Provider value={{ notas, addNota }}>
             {children}
@@ -41,4 +78,4 @@ export function useNotas() {
         throw new Error('As Notas devem ser usadas dentro do Provedor de Notas');
     }
     return ctx;
-};
+}
